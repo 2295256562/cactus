@@ -2,6 +2,41 @@ from django.contrib import admin
 
 from .models import ApiGroup, Api, ApiDoc
 
+# from .models import RequestData, ParamVariable, HeaderVariable, FormVariable, JSONVariable, MultipartVariable, RawData, BinaryData
+from .models import RequestData, ParamVariable, HeaderVariable, FormVariable, MultipartVariable, RawData, BinaryData
+
+
+class RequestDataInline(admin.TabularInline):
+    model = RequestData
+
+
+class ParamVariableInline(admin.TabularInline):
+    model = ParamVariable
+
+
+class HeaderVariableInline(admin.TabularInline):
+    model = HeaderVariable
+
+
+class FormVariableInline(admin.TabularInline):
+    model = FormVariable
+
+
+# class JSONVariableInline(admin.TabularInline):
+#     model = JSONVariable
+
+
+class MultipartVariableInline(admin.TabularInline):
+    model = MultipartVariable
+
+
+class RawDataInline(admin.TabularInline):
+    model = RawData
+
+
+class BinaryDataInline(admin.TabularInline):
+    model = BinaryData
+
 
 class ApiInline(admin.TabularInline):
     model = Api
@@ -28,3 +63,9 @@ class ApiAdmin(admin.ModelAdmin):
 @admin.register(ApiDoc)
 class ApiDocAdmin(admin.ModelAdmin):
     list_display = ['api', 'created', 'modified']
+
+
+@admin.register(RequestData)
+class RequestDataAdmin(admin.ModelAdmin):
+    list_display = ['api', 'created', 'modified']
+    inlines = [ParamVariableInline, HeaderVariableInline, FormVariableInline, MultipartVariableInline, RawDataInline, BinaryDataInline]

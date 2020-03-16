@@ -1,63 +1,63 @@
-import xadmin
-from django.contrib import admin
+# import xadmin
+# from django.contrib import admin
 
-from .models import TestSuite, TestCase, TestStep, ParamVariable, HeaderVariable, FormVariable, JSONVariable, MultipartVariable, RawData, BinaryData
-
-
-class TestCaseInline(object):
-    model = TestCase
+# from .models import TestSuite, TestCase, TestStep, ParamVariable, HeaderVariable, FormVariable, JSONVariable, MultipartVariable, RawData, BinaryData
 
 
-class TestStepInline(object):
-    model = TestStep
+# class TestCaseInline(object):
+#     model = TestCase
 
 
-class ParamVariableInline(object):
-    model = ParamVariable
+# class TestStepInline(object):
+#     model = TestStep
 
 
-class HeaderVariableInline(object):
-    model = HeaderVariable
+# class ParamVariableInline(object):
+#     model = ParamVariable
 
 
-class FormVariableInline(object):
-    model = FormVariable
+# class HeaderVariableInline(object):
+#     model = HeaderVariable
 
 
-class JSONVariableInline(object):
-    model = JSONVariable
+# class FormVariableInline(object):
+#     model = FormVariable
 
 
-class MultipartVariableInline(object):
-    model = MultipartVariable
+# class JSONVariableInline(object):
+#     model = JSONVariable
 
 
-class RawDataInline(object):
-    model = RawData
+# class MultipartVariableInline(object):
+#     model = MultipartVariable
 
 
-class BinaryDataInline(object):
-    model = BinaryData
+# class RawDataInline(object):
+#     model = RawData
 
 
-class TestSuiteAdmin(object):
-    list_display = ['name', 'project', 'description', 'created', 'modified']
-    list_filter = ('project',)
-    inlines = [TestCaseInline]
+# class BinaryDataInline(object):
+#     model = BinaryData
 
 
-class TestCaseAdmin(object):
-    list_display = ['name', 'suite', 'description', 'created', 'modified']
-    list_filter = ('suite',)
-    inlines = [TestStepInline]
+# class TestSuiteAdmin(object):
+#     list_display = ['name', 'project', 'description', 'created', 'modified']
+#     list_filter = ('project',)
+#     inlines = [TestCaseInline]
 
 
-class TestStepAdmin(object):
-    list_display = ['name', 'case', 'description', 'created', 'modified']
-    list_filter = ('case',)
-    inlines = [ParamVariableInline, HeaderVariableInline, FormVariableInline, JSONVariableInline, MultipartVariableInline, RawDataInline, BinaryDataInline]
+# class TestCaseAdmin(object):
+#     list_display = ['name', 'suite', 'description', 'created', 'modified']
+#     list_filter = ('suite',)
+#     inlines = [TestStepInline]
 
 
-xadmin.site.register(TestSuite, TestSuiteAdmin)
-xadmin.site.register(TestCase, TestCaseAdmin)
-xadmin.site.register(TestStep, TestStepAdmin)
+# class TestStepAdmin(object):
+#     list_display = ['name', 'case', 'description', 'created', 'modified']
+#     list_filter = ('case',)
+#     inlines = [ParamVariableInline, HeaderVariableInline, FormVariableInline, JSONVariableInline, MultipartVariableInline, RawDataInline, BinaryDataInline]
+
+
+# xadmin.site.register(TestSuite, TestSuiteAdmin)
+# xadmin.site.register(TestCase, TestCaseAdmin)
+# xadmin.site.register(TestStep, TestStepAdmin)
