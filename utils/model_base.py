@@ -45,4 +45,5 @@ class ModelWithUser(ModelWithDesc):
     class Meta:
         abstract = True
 
-    user = models.ForeignKey(User, verbose_name='用户', on_delete=models.CASCADE)
+    creator = models.ForeignKey(User, verbose_name='创建人', on_delete=models.CASCADE)
+    edit_user = models.ForeignKey(User, verbose_name='编辑人', on_delete=models.CASCADE)
