@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-# from .models import TestSuite, TestCase, TestStep, ParamVariable, HeaderVariable, FormVariable, JSONVariable, MultipartVariable, RawData, BinaryData
-from .models import TestSuite, TestCase, TestStep
+from .models import TestSuite, TestCase, TestStep, ParamVariable, HeaderVariable, FormVariable, MultipartVariable, RawData, BinaryData
+# from .models import TestSuite, TestCase, TestStep
 from apis.admin import RequestDataInline
 
 
@@ -13,32 +13,32 @@ class TestStepInline(admin.TabularInline):
     model = TestStep
 
 
-# class ParamVariableInline(admin.TabularInline):
-#     model = ParamVariable
+class ParamVariableInline(admin.TabularInline):
+    model = ParamVariable
 
 
-# class HeaderVariableInline(admin.TabularInline):
-#     model = HeaderVariable
+class HeaderVariableInline(admin.TabularInline):
+    model = HeaderVariable
 
 
-# class FormVariableInline(admin.TabularInline):
-#     model = FormVariable
+class FormVariableInline(admin.TabularInline):
+    model = FormVariable
 
 
 # class JSONVariableInline(admin.TabularInline):
 #     model = JSONVariable
 
 
-# class MultipartVariableInline(admin.TabularInline):
-#     model = MultipartVariable
+class MultipartVariableInline(admin.TabularInline):
+    model = MultipartVariable
 
 
-# class RawDataInline(admin.StackedInline):
-#     model = RawData
+class RawDataInline(admin.StackedInline):
+    model = RawData
 
 
-# class BinaryDataInline(admin.StackedInline):
-#     model = BinaryData
+class BinaryDataInline(admin.StackedInline):
+    model = BinaryData
 
 
 @admin.register(TestSuite)
@@ -59,5 +59,5 @@ class TestCaseAdmin(admin.ModelAdmin):
 class TestStepAdmin(admin.ModelAdmin):
     list_display = ['name', 'case', 'description', 'created', 'modified']
     list_filter = ('case',)
-    # inlines = [ParamVariableInline, HeaderVariableInline, FormVariableInline, JSONVariableInline, MultipartVariableInline, RawDataInline, BinaryDataInline]
+    inlines = [ParamVariableInline, HeaderVariableInline, FormVariableInline, MultipartVariableInline, RawDataInline, BinaryDataInline]
     # inlines = [RequestDataInline]

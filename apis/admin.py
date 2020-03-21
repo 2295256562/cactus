@@ -57,7 +57,7 @@ class ApiGroupAdmin(admin.ModelAdmin):
 class ApiAdmin(admin.ModelAdmin):
     list_display = ['name', 'group', 'description', 'created', 'modified']
     list_filters = ['group']
-    inlines = [ApiDocInline]
+    inlines = [ApiDocInline, ParamVariableInline, HeaderVariableInline, FormVariableInline, MultipartVariableInline, RawDataInline, BinaryDataInline]
 
 
 @admin.register(ApiDoc)
@@ -65,7 +65,7 @@ class ApiDocAdmin(admin.ModelAdmin):
     list_display = ['api', 'created', 'modified']
 
 
-@admin.register(RequestData)
-class RequestDataAdmin(admin.ModelAdmin):
-    list_display = ['api', 'created', 'modified']
-    inlines = [ParamVariableInline, HeaderVariableInline, FormVariableInline, MultipartVariableInline, RawDataInline, BinaryDataInline]
+# @admin.register(RequestData)
+# class RequestDataAdmin(admin.ModelAdmin):
+#     list_display = ['api', 'created', 'modified']
+#     inlines = [ParamVariableInline, HeaderVariableInline, FormVariableInline, MultipartVariableInline, RawDataInline, BinaryDataInline]

@@ -65,7 +65,7 @@ class ParamVariable(ModelWithKey):
     class Meta:
         verbose_name_plural = verbose_name = 'URL参数'
 
-    data = models.ForeignKey(RequestData, verbose_name='请求数据', on_delete=models.CASCADE)
+    api = models.ForeignKey(Api, verbose_name='接口', on_delete=models.CASCADE)
     value = models.CharField('变量值', max_length=200)
 
 
@@ -73,7 +73,7 @@ class HeaderVariable(ModelWithKey):
     class Meta:
         verbose_name_plural = verbose_name = '请求头'
 
-    data = models.ForeignKey(RequestData, verbose_name='请求数据', on_delete=models.CASCADE)
+    api = models.ForeignKey(Api, verbose_name='接口', on_delete=models.CASCADE)
     value = models.CharField('变量值', max_length=200)
 
 
@@ -81,7 +81,7 @@ class FormVariable(ModelWithKey):
     class Meta:
         verbose_name_plural = verbose_name = '表单参数'
 
-    data = models.ForeignKey(RequestData, verbose_name='请求数据', on_delete=models.CASCADE)
+    api = models.ForeignKey(Api, verbose_name='接口', on_delete=models.CASCADE)
     value = models.CharField('变量值', max_length=200)
 
 
@@ -96,8 +96,12 @@ class FormVariable(ModelWithKey):
 class MultipartVariable(ModelWithKey):
     class Meta:
         verbose_name_plural = verbose_name = '复合表单参数'
-
-    data = models.ForeignKey(RequestData, verbose_name='请求数据', on_delete=models.CASCADE)
+    VALUE_TYPE_CHOICES = (
+        ('text', '文本'),
+        ('file', '文件')
+    )
+    api = models.ForeignKey(Api, verbose_name='接口', on_delete=models.CASCADE)
+    value_type = models.CharField('变量类型', max_length=10, choices=VALUE_TYPE_CHOICES, default='file')
     value = models.CharField('变量值', max_length=200)
 
 
@@ -112,7 +116,7 @@ class RawData(ModelWithKey):
         ('application/json', 'JSON'),
 
     )
-    data = models.OneToOneField(RequestData, verbose_name='请求数据', on_delete=models.CASCADE)
+    api = models.OneToOneField(Api, verbose_name='接口', on_delete=models.CASCADE)
     content_type = models.CharField('内容类型', max_length=100, choices=CONTENT_TYPE_CHOICES, default='text/plain')
     raw = models.TextField('请求数据')
 
@@ -120,5 +124,6 @@ class RawData(ModelWithKey):
 class BinaryData(ModelWithKey):
     class Meta:
         verbose_name_plural = verbose_name = '二进制请求数据'
-    data = models.OneToOneField(RequestData, verbose_name='请求数据', on_delete=models.CASCADE)
+    api = models.OneToOneField(Api, verbose_name='接口', on_delete=models.CASCADE)
+    # data = models.OneToOneField(RequestData, verbose_name='请求数据', on_delete=models.CASCADE)
     file_path = models.FileField('上传文件')

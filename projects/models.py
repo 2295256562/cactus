@@ -6,6 +6,9 @@ class Project(ModelWithDesc):
     class Meta:
         verbose_name_plural = verbose_name = '项目'
 
+# class Variable(ModelWithKey):
+#     value = models.CharField('变量值', max_length=200)
+
 
 class Env(ModelWithName):
     class Meta:
@@ -34,3 +37,19 @@ class Tag(ModelWithDesc):
     class Meta:
         verbose_name_plural = verbose_name = '标签'
     project = models.ForeignKey(Project, verbose_name='项目', on_delete=models.CASCADE)
+
+
+class ProjectVariable(ModelWithKey):
+    class Meta:
+        verbose_name_plural = verbose_name = '项目变量'
+
+    project = models.ForeignKey(Project, verbose_name='项目', on_delete=models.CASCADE)
+    value = models.CharField('变量值', max_length=200)
+
+
+class ProjectHeader(ModelWithKey):
+    class Meta:
+        verbose_name_plural = verbose_name = '请求头配置'
+
+    project = models.ForeignKey(Project, verbose_name='项目', on_delete=models.CASCADE)
+    value = models.CharField('变量值', max_length=200)
