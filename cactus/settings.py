@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '+=*7n6nkrj=z&z@dx)y$k!r_sf^owptz-&10h0%3gu+=g%@&#w'
+SECRET_KEY = '#1r8yj1!ch(9z=qg-chkwyvt_i^7tx12(*89!xcu8xz9hl(*wi'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,27 +31,12 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    # 'simpleui',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    'xadmin',
-    'crispy_forms',
-    # 'reversion',
-    # 'captcha',
-    # 'pure_pagination',
-    'rest_framework',
-    'djcelery',
-
-    'apis',
-    'projects',
-    'tasks',
-    'cases',
-    'datas',
 ]
 
 MIDDLEWARE = [
@@ -118,29 +103,18 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'zh-hans'
+LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Shanghai'
-
-USE_L10N = False
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
+USE_L10N = True
+
 USE_TZ = True
-
-DATETIME_FORMAT = 'Y年m月d日 H:i:s'
-
-DATE_FORMAT = 'Y年m月d日'
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
-
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
-    ]
-}
