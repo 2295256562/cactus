@@ -24,6 +24,7 @@ class ModelWithKey(ModelBase):
     def __str__(self):
         return self.key
 
+
 class ModelWithName(ModelBase):
     class Meta:
         abstract = True
