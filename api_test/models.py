@@ -89,8 +89,15 @@ class TestCase(ModelWithDesc):
     tags = models.ManyToManyField(Tag, verbose_name='标签', blank=True)
 
     def run(self, session=None, context=None, env_id=None, debug=False):
-        for step in self.steps.objects.all().order_by('order'):
-            step.run(session, context, env_id, debug)
+        result = dict(name=self.name, status='PASS')
+        steps = self.steps.all().order_by('order')
+        step_results = []
+        for step in steps:
+            step_results.append(step.run(session, context, env_id, debug))
+        is_pass = all([step['status'] == 'PASS' for step in step_results])
+        result['status'] = 'PASS' if is_pass else 'FAIL'
+        result['steps'] = step_results
+        return result
 
 
 class TestStep(ModelWithDesc):

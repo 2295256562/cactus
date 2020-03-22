@@ -3,28 +3,46 @@ from api_test import views
 
 app_name = 'api_test'   # 指定命名空间
 
+LIST_VIEW = dict(get='list', post='created')
+DETAIL_VIEW = dict(get='retrieve', put='update', delete='destroy')
+RUN_VIEW = dict(get='run')
+PARSE_VIEW = dict(get='parse')
+COPY_VIEW = dict(get='copy')
+
 urlpatterns = [
-    path('projects/', views.ProjectList.as_view(), name='projects'),
-    path('projects/<pk>/', views.ProjectDetail.as_view(), name='project'),
-    path('envs/', views.EnvList.as_view(), name='envs'),
-    path('envs/<pk>/', views.EnvDetail.as_view(), name='env'),
-    path('tags/', views.TagList.as_view(), name='tags'),
-    path('tags/<pk>/', views.TagDetail.as_view(), name='tag'),
-    path('variables/', views.VariableList.as_view(), name='variables'),
-    path('variables/<pk>/', views.VariableDetail.as_view(), name='variable'),
+    path('projects/', views.Project.as_view(LIST_VIEW), name='projects'),
+    path('projects/<pk>/', views.Project.as_view(DETAIL_VIEW), name='project'),
 
-    path('api_categories/', views.ApiCategoryList.as_view(), name='api_categories'),
-    path('api_categories/<pk>/', views.ApiCategoryDetail.as_view(), name='api_category'),
-    path('apis/', views.ApiList.as_view(), name='apis'),
-    path('api/<pk>/', views.ApiDetail.as_view(), name='api'),
+    path('envs/', views.Env.as_view(LIST_VIEW), name='envs'),
+    path('envs/<pk>/', views.Env.as_view(DETAIL_VIEW), name='env'),
 
-    path('testcases/', views.TestCaseList.as_view(), name='testcases'),
-    path('testcases/<pk>/', views.TestCaseDetail.as_view(), name='testcase'),
-    path('teststeps/', views.TestStepList.as_view(), name='teststeps'),
-    path('teststeps/<pk>/', views.TestStepDetail.as_view(), name='teststep'),
+    path('tags/', views.Tag.as_view(LIST_VIEW), name='tags'),
+    path('tags/<pk>/', views.Tag.as_view(DETAIL_VIEW), name='tag'),
 
-    path('testsuites/', views.TestSuiteList.as_view(), name='testsuites'),
-    path('testsuites/<pk>/', views.TestSuiteDetail.as_view(), name='testsuite'),
-    path('testreports/', views.TestReportList.as_view(), name='testreports'),
-    path('testreports/<pk>/', views.TestReportDetail.as_view(), name='testreport'),
+    path('variables/', views.Variable.as_view(LIST_VIEW), name='variables'),
+    path('variables/<pk>/', views.Variable.as_view(DETAIL_VIEW), name='variable'),
+
+    path('api_categories/', views.ApiCategory.as_view(LIST_VIEW), name='api_categories'),
+    path('api_categories/<pk>/', views.ApiCategory.as_view(DETAIL_VIEW), name='api_category'),
+
+    path('apis/', views.Api.as_view(LIST_VIEW), name='apis'),
+    path('api/<pk>/', views.Api.as_view(DETAIL_VIEW), name='api'),
+
+    path('testcases/', views.TestCase.as_view(LIST_VIEW), name='testcases'),
+    path('testcases/<pk>/', views.TestCase.as_view(DETAIL_VIEW), name='testcase'),
+    path('testcases/<pk>/parse/', views.TestCase.as_view(PARSE_VIEW), name='testcase'),
+    path('testcases/<pk>/run/', views.TestCase.as_view(RUN_VIEW), name='testcase'),
+    path('testcases/<pk>/copy/', views.TestCase.as_view(COPY_VIEW), name='testcase'),
+
+    path('teststeps/', views.TestStep.as_view(LIST_VIEW), name='teststeps'),
+    path('teststeps/<pk>/', views.TestStep.as_view(DETAIL_VIEW), name='teststep'),
+    path('teststeps/<pk>/parse/', views.TestStep.as_view(PARSE_VIEW), name='teststep'),
+    path('teststeps/<pk>/run/', views.TestStep.as_view(RUN_VIEW), name='teststep'),
+    path('teststeps/<pk>/copy/', views.TestStep.as_view(COPY_VIEW), name='teststep'),
+
+    path('testsuites/', views.TestSuite.as_view(LIST_VIEW), name='testsuites'),
+    path('testsuites/<pk>/', views.TestSuite.as_view(DETAIL_VIEW), name='testsuite'),
+
+    path('testreports/', views.TestReport.as_view(LIST_VIEW), name='testreports'),
+    path('testreports/<pk>/', views.TestReport.as_view(DETAIL_VIEW), name='testreport'),
 ]
