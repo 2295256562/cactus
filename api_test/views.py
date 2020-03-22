@@ -1,6 +1,9 @@
+from django.http import JsonResponse
 from rest_framework import generics
+
 from api_test import serializers
 from api_test import models
+
 
 
 class ProjectList(generics.ListCreateAPIView):
@@ -82,6 +85,19 @@ class TestStepDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.TestStep.objects.all()
     serializer_class = serializers.TestStepSerializer
 
+    def parse(self, request, *args, **kwargs):
+        env_id = request.GET.get('env_id')  # todo check
+        step = self.get_object()
+        data = step.parse(env_id=env_id)
+        return JsonResponse(data)
+
+    def post(self,request, *args, **kwargs):
+        env_id = request.POST.get('env_id')  # todo check
+        step = self.get_object()
+        result = step.run(env_id=env_id)
+        return JsonResponse(result)
+
+
 
 class TestSuiteList(generics.ListCreateAPIView):
     queryset = models.TestSuite.objects.all()
@@ -101,3 +117,4 @@ class TestReportList(generics.ListCreateAPIView):
 class TestReportDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.TestReport.objects.all()
     serializer_class = serializers.TestReportSerializer
+

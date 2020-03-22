@@ -20,6 +20,7 @@ class ModelWithKey(ModelBase):
         abstract = True
 
     key = models.CharField("变量", max_length=200)
+    value = models.CharField('变量值', max_length=500)   # yaml string
 
     def __str__(self):
         return self.key
@@ -39,7 +40,7 @@ class ModelWithDesc(ModelWithName):
     class Meta:
         abstract = True
 
-    description = models.CharField('描述', max_length=500, **NULLABLE)
+    description = models.CharField('描述', max_length=500, default='')
 
 
 class ModelWithUser(ModelWithDesc):

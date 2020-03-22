@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-import models
+from api_test import models
 
 
 class EnvInline(admin.TabularInline):
@@ -31,13 +31,13 @@ class ApiCategoryAdmin(admin.ModelAdmin):
     inlines = [ApiInline]
 
 
-class TestStepInline(admin.TabularInline):
+class TestStepInline(admin.StackedInline):
     model = models.TestStep
 
 
 @admin.register(models.TestCase)
 class TestCaseAdmin(admin.ModelAdmin):
-    list_display = ['name', 'project', 'tags', 'description', 'created', 'modified']
+    list_display = ['name', 'project', 'description', 'created', 'modified']
     inlines = [TestStepInline]
 
 

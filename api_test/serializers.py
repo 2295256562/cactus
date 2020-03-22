@@ -11,61 +11,66 @@ class MyPagination(PageNumberPagination):
     max_page_size = 100
 
 
-class ProjectSerializer(serializers.ModelSerializer):
+class SerilizerBase(serializers.ModelSerializer):
+    created = serializers.DateTimeField(format='%Y-%m-%d %H:%M:%S')
+    modified = serializers.DateTimeField(format='%Y-%m-%d %H:%M:%S')
+
+
+class ProjectSerializer(SerilizerBase):
     class Meta:
         model = models.Project
         fields = '__all__'
 
 
-class EnvSerializer(serializers.ModelSerializer):
+class EnvSerializer(SerilizerBase):
     class Meta:
         model = models.Env
         fields = '__all__'
 
 
-class VariableSerializer(serializers.ModelSerializer):
+class VariableSerializer(SerilizerBase):
     class Meta:
         model = models.Variable
         fields = '__all__'
 
 
-class TagSerializer(serializers.ModelSerializer):
+class TagSerializer(SerilizerBase):
     class Meta:
         model = models.Tag
         fields = '__all__'
 
 
-class ApiCategorySerializer(serializers.ModelSerializer):
+class ApiCategorySerializer(SerilizerBase):
     class Meta:
         model = models.ApiCategory
         fields = '__all__'
 
 
-class ApiSerializer(serializers.ModelSerializer):
+class ApiSerializer(SerilizerBase):
     class Meta:
         model = models.Api
         fields = '__all__'
 
 
-class TestCaseSerializer(serializers.ModelSerializer):
+class TestCaseSerializer(SerilizerBase):
     class Meta:
         model = models.TestCase
         fields = '__all__'
 
 
-class TestStepSerializer(serializers.ModelSerializer):
+class TestStepSerializer(SerilizerBase):
     class Meta:
         model = models.TestStep
         fields = '__all__'
 
 
-class TestSuiteSerializer(serializers.ModelSerializer):
+class TestSuiteSerializer(SerilizerBase):
     class Meta:
         model = models.TestSuite
         fields = '__all__'
 
 
-class TestReportSerializer(serializers.ModelSerializer):
+class TestReportSerializer(SerilizerBase):
     class Meta:
         model = models.TestReport
         fields = '__all__'
