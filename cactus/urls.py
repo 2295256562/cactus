@@ -5,5 +5,5 @@ from api_test import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/api_test/', include('api_test.urls', namespace='api_test')),  # 增加该行
+    path('api/', include('api_test.urls', namespace='api_test')),  # 增加该行
 ]

@@ -1,8 +1,11 @@
 from django.http import JsonResponse
 from rest_framework import generics, mixins, viewsets
+from djcelery.models import PeriodicTask
+
 
 from api_test import serializers
 from api_test import models
+
 
 class BaseView(mixins.ListModelMixin, mixins.CreateModelMixin,
                mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin,
@@ -46,21 +49,23 @@ class TestCase(BaseView):
     def parse(self, request, *args, **kwargs):
         env_id = request.GET.get('env_id')  # todo check
         case = self.get_object()
-        data = dict(name=case.name, description=case.description)
-        data['tags'] = [tag.name for tag in case.tags.all()]
-        data['steps'] = [step.parse(env_id=env_id) for step in case.steps.all()]
+        data = case.parse(env_id=env_id)
         return JsonResponse(data)
 
     def run(self,request, *args, **kwargs):
         env_id = request.GET.get('env_id')  # todo check
         case = self.get_object()
-        result = case.run(env_id=env_id)
+        result = case.run_step(env_id=env_id)
         return JsonResponse(result)
 
     def copy(self, request, *args, **kwargs):
         case = self.get_object()
         new_case = models.TestCase.objects.create(name=case.name, description=case.description, project=case.project)
         [new_case.tags.add(tag) for tag in case.tags.all()]
+        for step in case.steps.all():
+            models.TestStep.objects.create(name=step.name, description=step.description, case=new_case,
+                                           order=step.order, api=step.api, skip=step.skip, request=step.request,
+                                           extract=step.extract, check=step.check)
         return JsonResponse({'code': 0, 'message': '复制成功'})
 
 
@@ -77,7 +82,7 @@ class TestStep(BaseView):
     def run(self,request, *args, **kwargs):
         env_id = request.GET.get('env_id')  # todo check
         step = self.get_object()
-        result = step.run(env_id=env_id)
+        result = step.run_step(env_id=env_id)
         return JsonResponse(result)
 
     def copy(self, request, *args, **kwargs):
@@ -95,21 +100,21 @@ class TestSuite(BaseView):
     def parse(self, request, *args, **kwargs):  # todo
         env_id = request.GET.get('env_id')  # todo check
         suite = self.get_object()
-        data = dict(name=suite.name, description=suite.description)
-        data['tags'] = [tag.name for tag in suite.tags.all()]
-        data['steps'] = [step.parse(env_id=env_id) for step in suite.steps.all()]
+
+        data = suite.parse(env_id=env_id)
         return JsonResponse(data)
 
     def run(self,request, *args, **kwargs):  # todo
         env_id = request.GET.get('env_id')  # todo check
         suite = self.get_object()
-        result = suite.run(env_id=env_id)
+        result = suite.run_step(env_id=env_id)
         return JsonResponse(result)
 
     def copy(self, request, *args, **kwargs):  # todo
         suite = self.get_object()
-        new_suite = models.TestCase.objects.create(name=suite.name, description=suite.description, project=suite.project)
-        [new_suite.tags.add(tag) for tag in suite.tags.all()]
+        new_suite = models.TestSuite.objects.create(name=suite.name, description=suite.description, project=suite.project)
+        [new_suite.testcases.add(case) for case in suite.testcases.all()]
+        [new_suite.sub_suites.add(suite) for suite in suite.sub_suites.all()]
         return JsonResponse({'code': 0, 'message': '复制成功'})
 
 
@@ -124,3 +129,8 @@ class TestSuite(BaseView):
 class TestReport(BaseView):
     queryset = models.TestReport.objects.all()
     serializer_class = serializers.TestReportSerializer
+
+
+class Task(BaseView):
+    queryset = PeriodicTask.objects.all()
+    serializer_class = serializers.PeriodicTaskSerializer

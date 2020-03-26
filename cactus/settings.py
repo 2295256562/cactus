@@ -1,5 +1,9 @@
 import os
+
+import djcelery
 from logz import log
+
+djcelery.setup_loader()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -100,9 +104,37 @@ DATE_FORMAT = 'Y年m月d日'
 
 STATIC_URL = '/static/'
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_SSL = True  # 是否使用SSL加密
+EMAIL_HOST = 'smtp.exmail.qq.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'rpa@secoo.com'
+EMAIL_HOST_PASSWORD = 'Youxiang_00137'
+
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
     ]
 }
+
+
+BROKER_URL = 'redis://10.0.254.121:6379/10'
+# BROKER_TRANSPORT = 'redis'
+# CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/1'
+CELERYD_MAX_TASKS_PER_CHILD = 100
+CELERYD_CONCURRENCY = 20
+CELERY_TIMEZONE = 'Asia/Shanghai'
+# CELERY_IMPORTS = ('crontab.task', )
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'#定时任务调度 配置存储到数据库 所以可以web端动态添加哦
+CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend' # 结果存储，我配置的是存储到数据库
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+# CELERY_DEFAULT_QUEUE = 'default'
+
+# CELERY_QUEUES = {
+#     "default": {"exchange": "default", "exchange_type": "direct", "routing_key": "default"},
+#     "topicqueue": {"exchange": "topic", "exchange_type": "topic", "routing_key": "topictest.#"},
+# }

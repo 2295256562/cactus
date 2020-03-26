@@ -1,5 +1,7 @@
+
 from rest_framework import serializers
 from rest_framework.pagination import PageNumberPagination
+from djcelery.models import PeriodicTask
 
 from api_test import models
 
@@ -11,66 +13,71 @@ class MyPagination(PageNumberPagination):
     max_page_size = 100
 
 
-class SerilizerBase(serializers.ModelSerializer):
-    created = serializers.DateTimeField(format='%Y-%m-%d %H:%M:%S')
-    modified = serializers.DateTimeField(format='%Y-%m-%d %H:%M:%S')
+class SerializerBase(serializers.ModelSerializer):
+    created = serializers.DateTimeField(format='%Y-%m-%d %H:%M:%S', allow_null=True)
+    modified = serializers.DateTimeField(format='%Y-%m-%d %H:%M:%S', allow_null=True)
 
 
-class ProjectSerializer(SerilizerBase):
+class ProjectSerializer(SerializerBase):
     class Meta:
         model = models.Project
         fields = '__all__'
 
 
-class EnvSerializer(SerilizerBase):
+class EnvSerializer(SerializerBase):
     class Meta:
         model = models.Env
         fields = '__all__'
 
 
-class VariableSerializer(SerilizerBase):
+class VariableSerializer(SerializerBase):
     class Meta:
         model = models.Variable
         fields = '__all__'
 
 
-class TagSerializer(SerilizerBase):
+class TagSerializer(SerializerBase):
     class Meta:
         model = models.Tag
         fields = '__all__'
 
 
-class ApiCategorySerializer(SerilizerBase):
+class ApiCategorySerializer(SerializerBase):
     class Meta:
         model = models.ApiCategory
         fields = '__all__'
 
 
-class ApiSerializer(SerilizerBase):
+class ApiSerializer(SerializerBase):
     class Meta:
         model = models.Api
         fields = '__all__'
 
 
-class TestCaseSerializer(SerilizerBase):
+class TestCaseSerializer(SerializerBase):
     class Meta:
         model = models.TestCase
         fields = '__all__'
 
 
-class TestStepSerializer(SerilizerBase):
+class TestStepSerializer(SerializerBase):
     class Meta:
         model = models.TestStep
         fields = '__all__'
 
 
-class TestSuiteSerializer(SerilizerBase):
+class TestSuiteSerializer(SerializerBase):
     class Meta:
         model = models.TestSuite
         fields = '__all__'
 
 
-class TestReportSerializer(SerilizerBase):
+class TestReportSerializer(SerializerBase):
     class Meta:
         model = models.TestReport
+        fields = '__all__'
+
+class PeriodicTaskSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PeriodicTask
         fields = '__all__'

@@ -3,7 +3,7 @@ from api_test import views
 
 app_name = 'api_test'   # 指定命名空间
 
-LIST_VIEW = dict(get='list', post='created')
+LIST_VIEW = dict(get='list', post='create')
 DETAIL_VIEW = dict(get='retrieve', put='update', delete='destroy')
 RUN_VIEW = dict(get='run')
 PARSE_VIEW = dict(get='parse')
@@ -42,7 +42,13 @@ urlpatterns = [
 
     path('testsuites/', views.TestSuite.as_view(LIST_VIEW), name='testsuites'),
     path('testsuites/<pk>/', views.TestSuite.as_view(DETAIL_VIEW), name='testsuite'),
+    path('testsuites/<pk>/parse/', views.TestSuite.as_view(PARSE_VIEW), name='teststep'),
+    path('testsuites/<pk>/run/', views.TestSuite.as_view(RUN_VIEW), name='teststep'),
+    path('testsuites/<pk>/copy/', views.TestSuite.as_view(COPY_VIEW), name='teststep'),
 
     path('testreports/', views.TestReport.as_view(LIST_VIEW), name='testreports'),
     path('testreports/<pk>/', views.TestReport.as_view(DETAIL_VIEW), name='testreport'),
+
+    path('tasks/', views.Task.as_view(LIST_VIEW), name='tasks'),
+    path('tasks/<pk>/', views.Task.as_view(DETAIL_VIEW), name='task'),
 ]
